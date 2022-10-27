@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const hangedMan = {
+            amountInputWord: 0,
+            start: true,
+            template: [],
+            wordItem: "",
+            cycleLife: 6,
+            wordsList : ["слон", "аллегория", "cингулярность", "гравитация", "аномалия", "нейтрино", "протон"],
+            letter: "",
+            userRequest: function () {
+                cycleFunc = true
+                while (cycleFunc) {
+                    const letter = prompt(
+                        "'"+this.template.join("'   '")+"'"+"\n"+
+                        "Введите букву"+"\n"+
+                        "Осталось "+this.cycleLife+ " жизней\n"+
+                        "Колличество попыток   "+ this.amountInputWord,
+                        )
+                    if(letter === null){
+                        this.cycleLife = 0;
+                        cycleFunc = false;
+                    }else if(letter.length===1 && !""){
+                        this.letter = letter.toLowerCase();
+                        this.amountInput++;
+                        cycleFunc = false;
+                    }
+                    else{
+                        alert("Введите букву коректно");
+                    }
+                }
+            },
+            getRandomWord: function () {
+                let namber = this.getRandomNamber(this.wordsList.length);
+                this.wordItem = this.wordsList[namber];
+
+            },
+            getTemplateUser: function () {
+                for (let i = 0; i < this.wordItem.length; i++) {
+                    this.template.push("_");
+                }
+            },
+            getRandomNamber: function (len) {
+                return Math.floor(Math.random() * (0 - len) + len);
+            },
+            checkWord: function () {
+                let error = false;
+                for (let i = 0; i < this.wordItem.length; i++) {
+                    if(this.wordItem[i] === this.letter){
+                        this.template[i] = this.letter;
+                        error = true;
+                    }
+                }
+                if(error){
+                    return "Вы угадали букву   "+this.letter;
+                }else if(error===false){
+                    this.cycleLife--;
+                    return "Вы совершили ошибку\n"+ "в слове нет бувы   "+this.letter
+                }
+            },
+            checkLetter: function () {
+                for (i of hangedMan.template){
+                    if("_" === i){return true};
+                }
+                return false;
+            },
+            resetProgram: function (params) {
+                hangedMan.amountInputWord = 0;
+                hangedMan.start = true;
+                hangedMan.template = [];
+                hangedMan.wordItem = "";
+                hangedMan.cycleLife = 6;
+                hangedMan.letter = "";
+            }
+        }
+
+
+        while (hangedMan.cycleLife) {
+            if(hangedMan.start){
+                hangedMan.getRandomWord();
+                hangedMan.getTemplateUser();
+                hangedMan.userRequest();
+                hangedMan.start = false;
+            }
+            if(hangedMan.cycleLife){
+                alert(hangedMan.checkWord());
+                if(hangedMan.checkLetter()){hangedMan.userRequest()}
+                else if(hangedMan.checkLetter() === false){
+                    let zeroing = confirm("Вы угадали слово   "+hangedMan.wordItem+"\n"+"Хотите продолжить с новым словом");
+                    if(zeroing){
+                        hangedMan.resetProgram();
+                    }else{
+                        hangedMan.cycleLife = false;
+                    }
+                }
+            }
+        }
+
+        alert("Игра окончена");
+    </script>
+</body>
+</html>
