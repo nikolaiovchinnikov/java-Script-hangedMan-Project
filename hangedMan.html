@@ -19,11 +19,11 @@
             userRequest: function () {
                 cycleFunc = true
                 while (cycleFunc) {
-                    const letter = prompt(
-                        "'"+this.template.join("'   '")+"'"+"\n"+
-                        "Введите букву"+"\n"+
-                        "Осталось "+this.cycleLife+ " жизней\n"+
-                        "Колличество попыток   "+ this.amountInputWord,
+                    const letter = prompt(`
+                        '${this.template.join("'   '")}'\n
+                        Введите букву\n
+                        Осталось ${this.cycleLife}  жизней\n
+                        Колличество попыток    ${this.amountInputWord}`
                         )
                     if(letter === null){
                         this.cycleLife = 0;
@@ -60,10 +60,10 @@
                     }
                 }
                 if(error){
-                    return "Вы угадали букву   "+this.letter;
+                    return `Вы угадали букву   ${this.letter}`;
                 }else if(error===false){
                     this.cycleLife--;
-                    return "Вы совершили ошибку\n"+ "в слове нет бувы   "+this.letter
+                    return `Вы совершили ошибку\nв слове нет бувы  ${this.letter}`
                 }
             },
             checkLetter: function () {
@@ -94,7 +94,7 @@
                 alert(hangedMan.checkWord());
                 if(hangedMan.checkLetter()){hangedMan.userRequest()}
                 else if(hangedMan.checkLetter() === false){
-                    let zeroing = confirm("Вы угадали слово   "+hangedMan.wordItem+"\n"+"Хотите продолжить с новым словом");
+                    let zeroing = confirm(`Вы угадали слово   ${hangedMan.wordItem} \n Хотите продолжить с новым слово`);
                     if(zeroing){
                         hangedMan.resetProgram();
                     }else{
